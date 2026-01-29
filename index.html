@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>黄昕彤 - AI产品经理 (空间智能方向)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/v4-shims.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366F1', // 科技蓝紫色
+                        secondary: '#F59E0B', // 活力橙色
+                        accent: '#10B981', // 清新绿色
+                        warm: '#FEF3C7', // 温暖的米色
+                        soft: '#F3E8FF', // 柔和的紫色
+                        dark: '#1F2937',
+                        light: '#FEFEFE'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'bounce-in': 'bounceIn 0.8s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                        'wiggle': 'wiggle 1s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        bounceIn: {
+                            '0%': { transform: 'scale(0.3)', opacity: '0' },
+                            '50%': { transform: 'scale(1.05)' },
+                            '70%': { transform: 'scale(0.9)' },
+                            '100%': { transform: 'scale(1)', opacity: '1' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-gradient {
+                background: linear-gradient(135deg, #6366F1, #F59E0B);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            .bg-gradient-primary {
+                background: linear-gradient(135deg, #6366F1 0%, #F59E0B 100%);
+            }
+            .bg-gradient-warm {
+                background: linear-gradient(135deg, #FEF3C7 0%, #F3E8FF 100%);
+            }
+            .bg-glass {
+                background: rgba(255, 255, 255, 0.9);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+            .bg-glass-dark {
+                background: rgba(31, 41, 55, 0.8);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(75, 85, 99, 0.3);
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .shadow-tech {
+                box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.1), 0 8px 10px -6px rgba(245, 158, 11, 0.1);
+            }
+        }
+    </style>
+</head>
+<body class="font-inter bg-light text-gray-800 dark:bg-dark dark:text-gray-200 transition-colors duration-300">
+    <!-- 导航栏 -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center animate-float">
+                        <i class="fas fa-robot text-white text-lg"></i>
+                    </div>
+                    <span class="text-xl font-bold text-gradient">AI Product Manager</span>
+                </div>
+                
+                <!-- 桌面导航 -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link hover:text-primary transition-colors duration-300">首页</a>
+                    <a href="#about" class="nav-link hover:text-primary transition-colors duration-300">关于我</a>
+                    <a href="#skills" class="nav-link hover:text-primary transition-colors duration-300">技能</a>
+                    <a href="#experience" class="nav-link hover:text-primary transition-colors duration-300">工作经历</a>
+                    <a href="#projects" class="nav-link hover:text-primary transition-colors duration-300">AI项目</a>
+                    <a href="#contact" class="nav-link hover:text-primary transition-colors duration-300">联系我</a>
+                </div>
+                
+                <!-- 主题切换按钮 -->
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300">
+                    <i class="fas fa-moon dark:hidden text-gray-600"></i>
+                    <i class="fas fa-sun hidden dark:block text-yellow-400"></i>
+                </button>
+                
+                <!-- 移动端菜单按钮 -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300">
+                    <i class="fas fa-bars text-gray-600 dark:text-gray-300"></i>
+                </button>
+            </div>
+            
+            <!-- 移动端导航菜单 -->
+            <div id="mobile-menu" class="md:hidden hidden mt-4 py-4 border-t border-gray-200 dark:border-gray-700">
+                <div class="flex flex-col space-y-4">
+                    <a href="#home" class="nav-link hover:text-primary transition-colors duration-300">首页</a>
+                    <a href="#about" class="nav-link hover:text-primary transition-colors duration-300">关于我</a>
+                    <a href="#skills" class="nav-link hover:text-primary transition-colors duration-300">技能</a>
+                    <a href="#experience" class="nav-link hover:text-primary transition-colors duration-300">工作经历</a>
+                    <a href="#projects" class="nav-link hover:text-primary transition-colors duration-300">AI项目</a>
+                    <a href="#contact" class="nav-link hover:text-primary transition-colors duration-300">联系我</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section id="home" class="min-h-screen flex items-center justify-center pt-16 relative overflow-hidden">
+        <!-- 背景装饰 -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute top-20 left-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-float"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-float" style="animation-delay: 1s;"></div>
+            <div class="absolute top-1/2 left-1/4 w-32 h-32 bg-accent/10 rounded-full blur-2xl animate-float" style="animation-delay: 0.5s;"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 py-16 relative z-10">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <!-- 文本内容 -->
+                <div class="md:w-1/2 mb-10 md:mb-0 animate-slide-up">
+                    <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold leading-tight mb-4">
+                        你好，我是
+                        <span class="text-gradient block">黄昕彤</span>
+                        <span class="text-[clamp(1.5rem,3vw,2.5rem)] text-gray-600 dark:text-gray-300">AI产品经理 (空间智能方向)</span>
+                    </h1>
+                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+                        城乡规划背景的AI产品经理，专注于空间智能、城市数据AI分析和智能规划解决方案。
+                        结合城市规划专业知识与AI技术，打造更智能、更可持续的城市生活。
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#projects" class="px-8 py-3 bg-gradient-primary text-white rounded-full hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 transform hover:scale-105">
+                            查看我的AI项目
+                        </a>
+                        <a href="#contact" class="px-8 py-3 border-2 border-primary text-primary rounded-full hover:bg-primary hover:text-white transition-all duration-300">
+                            联系我
+                        </a>
+                    </div>
+                    
+                    <!-- 社交链接 -->
+                    <div class="flex items-center space-x-4 mt-8">
+                        <a href="#" class="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300">
+                            <i class="fab fa-weixin"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 头像 -->
+                <div class="md:w-1/2 flex justify-center animate-bounce-in">
+                    <div class="relative">
+                        <div class="w-80 h-80 md:w-96 md:h-96 rounded-full overflow-hidden border-8 border-white dark:border-gray-800 shadow-2xl">
+                            <img src="https://aka.doubaocdn.com/s/rens1vvt8i?alice_filename=8e1e03220d3dee1e6f177b0b800d865e.jpg" alt="黄昕彤头像" class="w-full h-full object-cover">
+                        </div>
+                        <!-- 浮动技能标签 -->
+                        <div class="absolute -top-4 -left-4 bg-white dark:bg-gray-800 p-3 rounded-lg shadow-lg animate-float">
+                            <i class="fas fa-brain text-primary text-2xl"></i>
+                        </div>
+                        <div class="absolute top-1/2 -right-6 bg-white dark:bg-gray-800 p-3 rounded-lg shadow-lg animate-float" style="animation-delay: 0.5s;">
+                            <i class="fas fa-chart-line text-secondary text-2xl"></i>
+                        </div>
+                        <div class="absolute -bottom-4 right-1/2 transform translate-x-1/2 bg-white dark:bg-gray-800 p-3 rounded-lg shadow-lg animate-float" style="animation-delay: 1s;">
+                            <i class="fas fa-city text-accent text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 滚动提示 -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#about" class="text-gray-500 dark:text-gray-400 hover:text-primary transition-colors duration-300">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- 关于我 -->
+    <section id="about" class="py-20 bg-gray-50 dark:bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-slide-up">
+                <h2 class="text-[clamp(2rem,4vw,3rem)] font-bold text-gradient mb-4">关于我</h2>
+                <div class="w-20 h-1 bg-gradient-primary mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- 个人信息 -->
+                <div class="animate-slide-up">
+                    <h3 class="text-2xl font-bold mb-6">个人信息</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                                <i class="fas fa-user text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">姓名</p>
+                                <p class="text-gray-600 dark:text-gray-400">黄昕彤</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                                <i class="fas fa-briefcase text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">职位</p>
+                                <p class="text-gray-600 dark:text-gray-400">AI产品经理 (空间智能方向)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                                <i class="fas fa-calendar text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">经验</p>
+                                <p class="text-gray-600 dark:text-gray-400">3年+ 城市规划 + AI应用经验</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                                <i class="fas fa-map-marker-alt text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">位置</p>
+                                <p class="text-gray-600 dark:text-gray-400">广州, 中国</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                                <i class="fas fa-envelope text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">邮箱</p>
+                                <p class="text-gray-600 dark:text-gray-400">huang_xintong@qq.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                                <i class="fas fa-phone text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">电话</p>
+                                <p class="text-gray-600 dark:text-gray-400">15229072056</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <a href="https://aka.doubaocdn.com/s/uLfe1vvt8i?alice_filename=%25E9%25BB%2584%25E6%2598%2595%25E5%25BD%25A4_%25E6%25AD%25A6%25E6%25B1%2589%25E5%25A4%25A7%25E5%25AD%25A6%25282%2529.pdf" class="inline-flex items-center space-x-2 text-primary hover:text-accent transition-colors duration-300">
+                            <i class="fas fa-download"></i>
+                            <span>下载简历 PDF</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 自我介绍 -->
+                <div class="animate-slide-up" style="animation-delay: 0.2s;">
+                    <h3 class="text-2xl font-bold mb-6">职业转型故事</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+                        我是一名从城乡规划转型的AI产品经理，拥有武汉大学城乡规划学硕士学位和丰富的城市规划经验。
+                        在城市规划工作中，我发现AI技术正在深刻改变传统规划行业，这激发了我转向AI产品领域的热情。
+                    </p>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">
+                        我的核心优势在于将城市规划的系统思维与AI技术相结合，专注于空间智能、城市数据AI分析和智能规划解决方案。
+                        熟练掌握Python数据分析、机器学习基础、大模型应用和产品设计技能。
+                    </p>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
+                        在广州市城市规划设计有限公司工作期间，我主导了多个AI+城市规划的创新项目，
+                        包括城市数据智能分析平台、AI辅助规划决策系统等，积累了丰富的AI产品实践经验。
+                    </p>
+                    
+                    <!-- 统计信息 -->
+                    <div class="grid grid-cols-2 gap-6 mt-8">
+                        <div class="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+                            <div class="text-3xl font-bold text-primary mb-2">10+</div>
+                            <div class="text-gray-600 dark:text-gray-400">AI相关项目</div>
+                        </div>
+                        <div class="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+                            <div class="text-3xl font-bold text-primary mb-2">3年+</div>
+                            <div class="text-gray-600 dark:text-gray-400">AI产品经验</div>
+                        </div>
+                        <div class="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+                            <div class="text-3xl font-bold text-primary mb-2">5+</div>
+                            <div class="text-gray-600 dark:text-gray-400">AI专利/论文</div>
+                        </div>
+                        <div class="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+                            <div class="text-3xl font-bold text-primary mb-2">3个</div>
+                            <div class="text-gray-600 dark:text-gray-400">AI产品负责人</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技能 -->
+    <section id="skills" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-slide-up">
+                <h2 class="text-[clamp(2rem,4vw,3rem)] font-bold text-gradient mb-4">我的技能</h2>
+                <div class="w-20 h-1 bg-gradient-primary mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- 技能雷达图 -->
+                <div class="animate-slide-up">
+                    <h3 class="text-2xl font-bold mb-6">AI技能评估</h3>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 h-80">
+                        <div id="skillRadar" class="w-full h-full"></div>
+                    </div>
+                </div>
+                
+                <!-- 技能列表 -->
+                <div class="animate-slide-up" style="animation-delay: 0.2s;">
+                    <h3 class="text-2xl font-bold mb-6">核心技能</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-semibold">AI产品设计</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">90%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                                <div class="bg-gradient-primary h-3 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-semibold">机器学习基础</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                                <div class="bg-gradient-primary h-3 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-semibold">数据分析</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">90%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                                <div class="bg-gradient-primary h-3 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-semibold">大模型应用</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">80%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                                <div class="bg-gradient-primary h-3 rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-semibold">空间智能分析</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                                <div class="bg-gradient-primary h-3 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-semibold">产品原型设计</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">75%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                                <div class="bg-gradient-primary h-3 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-semibold">用户研究</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                                <div class="bg-gradient-primary h-3 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-semibold">项目管理</span>
+                                <span class="text-sm text-gray-600 dark:text-gray-400">90%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                                <div class="bg-gradient-primary h-3 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 技术标签 -->
+            <div class="mt-16 animate-slide-up">
+                <h3 class="text-2xl font-bold mb-8 text-center">专业领域</h3>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <span class="px-4 py-2 bg-primary/10 text-primary rounded-full hover:bg-primary hover:text-white transition-all duration-300">AI产品管理</span>
+                    <span class="px-4 py-2 bg-primary/10 text-primary rounded-full hover:bg-primary hover:text-white transition-all duration-300">空间智能</span>
+                    <span class="px-4 py-2 bg-primary/10 text-primary rounded-full hover:bg-primary hover:text-white transition-all duration-300">机器学习</span>
+                    <span class="px-4 py-2 bg-primary/10 text-primary rounded-full hover:bg-primary hover:text-white transition-all duration-300">数据分析</span>
+                    <span class="px-4 py-2 bg-primary/10 text-primary rounded-full hover:bg-primary hover:text-white transition-all duration-300">大模型应用</span>
+                    <span class="px-4 py-2 bg-primary/10 text-primary rounded-full hover:bg-primary hover:text-white transition-all duration-300">城市智能</span>
+                    <span class="px-4 py-2 bg-primary/10 text-primary rounded-full hover:bg-primary hover:text-white transition-all duration-300">用户体验</span>
+                    <span class="px-4 py-2 bg-primary/10 text-primary rounded-full hover:bg-primary hover:text-white transition-all duration-300">项目管理</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 教育背景 -->
+    <section class="py-20 bg-gray-50 dark:bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-slide-up">
+                <h2 class="text-[clamp(2rem,4vw,3rem)] font-bold text-gradient mb-4">教育背景</h2>
+                <div class="w-20 h-1 bg-gradient-primary mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <!-- 教育时间轴 -->
+                <div class="relative">
+                    <!-- 时间轴线 -->
+                    <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-primary/20"></div>
+                    
+                    <!-- 硕士教育 -->
+                    <div class="flex flex-col md:flex-row items-center mb-12 animate-slide-up">
+                        <div class="md:w-1/2 md:pr-8 mb-6 md:mb-0 md:text-right">
+                            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+                                <div class="text-primary font-bold text-lg mb-2">2021.09 - 2024.07</div>
+                                <h3 class="text-xl font-bold mb-2">武汉大学</h3>
+                                <p class="text-gray-600 dark:text-gray-400 mb-2">城乡规划学 硕士</p>
+                                <p class="text-gray-600 dark:text-gray-400 mb-4">城市设计学院</p>
+                                <div class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                                    <p>• GPA: 3.5/4.0 | Top 10%</p>
+                                    <p>• 学业奖学金一等奖</p>
+                                    <p>• CET-6</p>
+                                    <p>• 研究方向: 人工智能背景下的城市空间发展</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-primary rounded-full border-4 border-white dark:border-gray-900 z-10"></div>
+                        <div class="md:w-1/2 md:pl-8"></div>
+                    </div>
+                    
+                    <!-- 本科教育 -->
+                    <div class="flex flex-col md:flex-row items-center animate-slide-up" style="animation-delay: 0.2s;">
+                        <div class="md:w-1/2 md:pr-8"></div>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-primary rounded-full border-4 border-white dark:border-gray-900 z-10"></div>
+                        <div class="md:w-1/2 md:pl-8 mb-6 md:mb-0">
+                            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+                                <div class="text-primary font-bold text-lg mb-2">2016.09 - 2021.07</div>
+                                <h3 class="text-xl font-bold mb-2">长安大学</h3>
+                                <p class="text-gray-600 dark:text-gray-400 mb-2">城乡规划 本科</p>
+                                <p class="text-gray-600 dark:text-gray-400 mb-4">建筑学院</p>
+                                <div class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                                    <p>• GPA: 3.6/4.0 | Top 15%</p>
+                                    <p>• 国家奖学金</p>
+                                    <p>• 研究生推免资格</p>
+                                    <p>• 核心课程: 区域规划、城市数据分析等</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 工作经历 -->
+    <section id="experience" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-slide-up">
+                <h2 class="text-[clamp(2rem,4vw,3rem)] font-bold text-gradient mb-4">工作经历</h2>
+                <div class="w-20 h-1 bg-gradient-primary mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="relative">
+                    <!-- 时间轴线 -->
+                    <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-primary/20"></div>
+                    
+                    <!-- 工作经历 1 -->
+                    <div class="flex flex-col md:flex-row items-center animate-slide-up">
+                        <div class="md:w-1/2 md:pr-8 mb-6 md:mb-0 md:text-right">
+                            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+                                <div class="text-primary font-bold text-lg mb-2">2024.07 - 至今</div>
+                                <h3 class="text-xl font-bold mb-2">广州市城市规划设计有限公司</h3>
+                                <p class="text-gray-600 dark:text-gray-400 mb-4">产品经理 | 设计策划部</p>
+                                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                                    负责AI+城市规划产品的设计与落地，主导开发城市数据智能分析平台和AI辅助规划决策系统。
+                                    结合机器学习和空间分析技术，提升规划效率和科学性，获得多项AI项目成果。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-primary rounded-full border-4 border-white dark:border-gray-900 z-10"></div>
+                        <div class="md:w-1/2 md:pl-8"></div>
+                    </div>
+                    
+                    <!-- 工作经历 2 -->
+                    <div class="flex flex-col md:flex-row items-center animate-slide-up" style="animation-delay: 0.2s;">
+                        <div class="md:w-1/2 md:pr-8"></div>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-primary rounded-full border-4 border-white dark:border-gray-900 z-10"></div>
+                        <div class="md:w-1/2 md:pl-8 mb-6 md:mb-0">
+                            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+                                <div class="text-primary font-bold text-lg mb-2">2023.05 - 2023.09</div>
+                                <h3 class="text-xl font-bold mb-2">东莞市"机器代人"产业空间发展研究</h3>
+                                <p class="text-gray-600 dark:text-gray-400 mb-4">研究负责人 | 国家社科基金项目</p>
+                                <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                                    利用机器学习算法分析AI技术对产业空间的影响，构建智能化产业空间布局模型。
+                                    通过Python和机器学习技术处理海量城市数据，为AI+城市规划提供理论支撑。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI项目 -->
+    <section id="projects" class="py-20 bg-gray-50 dark:bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-slide-up">
+                <h2 class="text-[clamp(2rem,4vw,3rem)] font-bold text-gradient mb-4">我的AI项目</h2>
+                <div class="w-20 h-1 bg-gradient-primary mx-auto rounded-full"></div>
+            </div>
+            
+            <!-- 项目筛选 -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12 animate-slide-up">
+                <button class="project-filter active px-6 py-2 rounded-full bg-primary text-white hover:bg-primary/90 transition-all duration-300" data-filter="all">全部</button>
+                <button class="project-filter px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-primary hover:text-white transition-all duration-300" data-filter="ai_product">AI产品</button>
+                <button class="project-filter px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-primary hover:text-white transition-all duration-300" data-filter="research">AI研究</button>
+                <button class="project-filter px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-primary hover:text-white transition-all duration-300" data-filter="spatial">空间智能</button>
+            </div>
+            
+            <!-- 项目网格 -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 项目 1 -->
+                <div class="project-item group animate-slide-up" data-category="ai_product spatial">
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="relative overflow-hidden">
+                            <img src="https://via.placeholder.com/600/6366F1/FFFFFF?text=城市数据智能平台" alt="城市数据智能分析平台" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                <div class="p-6 text-white">
+                                    <div class="flex items-center space-x-2 mb-2">
+                                        <span class="px-2 py-1 bg-primary text-xs rounded-full">AI产品</span>
+                                        <span class="px-2 py-1 bg-secondary text-xs rounded-full">空间智能</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">城市数据智能分析平台</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">
+                                基于机器学习和大数据技术的城市数据智能分析平台，集成多源城市数据，
+                                提供智能分析、预测和可视化功能，为城市规划决策提供AI支撑。
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-500 dark:text-gray-400">2025.03 - 至今</span>
+                                <a href="#" class="text-primary hover:text-accent transition-colors duration-300">
+                                    查看详情 <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 项目 2 -->
+                <div class="project-item group animate-slide-up" style="animation-delay: 0.2s;" data-category="ai_product spatial">
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="relative overflow-hidden">
+                            <img src="https://via.placeholder.com/600/F59E0B/FFFFFF?text=AI辅助规划系统" alt="AI辅助规划决策系统" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                <div class="p-6 text-white">
+                                    <div class="flex items-center space-x-2 mb-2">
+                                        <span class="px-2 py-1 bg-primary text-xs rounded-full">AI产品</span>
+                                        <span class="px-2 py-1 bg-secondary text-xs rounded-full">决策支持</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">AI辅助规划决策系统</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">
+                                基于大模型的智能规划决策系统，通过自然语言交互方式为规划师提供智能建议，
+                                自动生成规划方案并进行多维度评估，显著提升规划效率。
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-500 dark:text-gray-400">2024.07 - 2025.01</span>
+                                <a href="#" class="text-primary hover:text-accent transition-colors duration-300">
+                                    查看详情 <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 项目 3 -->
+                <div class="project-item group animate-slide-up" style="animation-delay: 0.4s;" data-category="research spatial">
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="relative overflow-hidden">
+                            <img src="https://via.placeholder.com/600/10B981/FFFFFF?text=AI产业空间研究" alt="AI驱动的产业空间优化研究" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                <div class="p-6 text-white">
+                                    <div class="flex items-center space-x-2 mb-2">
+                                        <span class="px-2 py-1 bg-primary text-xs rounded-full">AI研究</span>
+                                        <span class="px-2 py-1 bg-secondary text-xs rounded-full">产业规划</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">AI驱动的产业空间优化研究</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">
+                                国家社科基金项目，研究AI技术对产业空间布局的影响机制，
+                                构建智能化产业空间优化模型，为城市产业规划提供科学依据。
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-500 dark:text-gray-400">2023.05 - 2023.09</span>
+                                <a href="#" class="text-primary hover:text-accent transition-colors duration-300">
+                                    查看详情 <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 项目 4 -->
+                <div class="project-item group animate-slide-up" style="animation-delay: 0.6s;" data-category="ai_product">
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="relative overflow-hidden">
+                            <img src="https://via.placeholder.com/600/A78BFA/FFFFFF?text=智能规划助手" alt="智能规划助手Chatbot" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                <div class="p-6 text-white">
+                                    <div class="flex items-center space-x-2 mb-2">
+                                        <span class="px-2 py-1 bg-primary text-xs rounded-full">AI产品</span>
+                                        <span class="px-2 py-1 bg-secondary text-xs rounded-full">Chatbot</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">智能规划助手Chatbot</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">
+                                基于GPT-4的专业规划助手，集成规划知识库和案例库，
+                                为规划师提供实时咨询、方案生成和技术支持服务。
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-500 dark:text-gray-400">2022.01 - 2023.12</span>
+                                <a href="#" class="text-primary hover:text-accent transition-colors duration-300">
+                                    查看详情 <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 项目 5 -->
+                <div class="project-item group animate-slide-up" style="animation-delay: 0.8s;" data-category="research">
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="relative overflow-hidden">
+                            <img src="https://via.placeholder.com/600/FBBF24/FFFFFF?text=机器学习空间分析" alt="机器学习在城市空间分析中的应用研究" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                <div class="p-6 text-white">
+                                    <div class="flex items-center space-x-2 mb-2">
+                                        <span class="px-2 py-1 bg-primary text-xs rounded-full">AI研究</span>
+                                        <span class="px-2 py-1 bg-secondary text-xs rounded-full">机器学习</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">机器学习在城市空间分析中的应用研究</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">
+                                研究机器学习算法在城市空间分析中的应用，开发智能化城市空间分析工具，
+                                为城市规划提供更精准的空间分析方法。
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-500 dark:text-gray-400">2023.09 - 2024.06</span>
+                                <a href="#" class="text-primary hover:text-accent transition-colors duration-300">
+                                    查看详情 <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 项目 6 -->
+                <div class="project-item group animate-slide-up" style="animation-delay: 1s;" data-category="spatial">
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="relative overflow-hidden">
+                            <img src="https://via.placeholder.com/600/EC4899/FFFFFF?text=空间智能分析" alt="空间智能分析系统" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                <div class="p-6 text-white">
+                                    <div class="flex items-center space-x-2 mb-2">
+                                        <span class="px-2 py-1 bg-primary text-xs rounded-full">空间智能</span>
+                                        <span class="px-2 py-1 bg-secondary text-xs rounded-full">GIS分析</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">空间智能分析系统</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4">
+                                集成AI和GIS技术的空间智能分析系统，实现城市空间数据的智能化处理和分析，
+                                为城市规划提供精准的空间决策支持。
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-500 dark:text-gray-400">2022.06 - 2023.08</span>
+                                <a href="#" class="text-primary hover:text-accent transition-colors duration-300">
+                                    查看详情 <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我 -->
+    <section id="contact" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 animate-slide-up">
+                <h2 class="text-[clamp(2rem,4vw,3rem)] font-bold text-gradient mb-4">联系我</h2>
+                <div class="w-20 h-1 bg-gradient-primary mx-auto rounded-full"></div>
+                <p class="text-gray-600 dark:text-gray-400 mt-4">
+                    有AI产品合作或求职意向，请随时联系我
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- 联系信息 -->
+                <div class="animate-slide-up">
+                    <h3 class="text-2xl font-bold mb-6">联系信息</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                                <i class="fas fa-map-marker-alt text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">地址</p>
+                                <p class="text-gray-600 dark:text-gray-400">深圳市南山区</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                                <i class="fas fa-phone text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">电话</p>
+                                <p class="text-gray-600 dark:text-gray-400">15229072056</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                                <i class="fas fa-envelope text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">邮箱</p>
+                                <p class="text-gray-600 dark:text-gray-400">huang_xintong@qq.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                                <i class="fas fa-globe text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">个人网站</p>
+                                <p class="text-gray-600 dark:text-gray-400">www.xintong-ai.com</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 社交链接 -->
+                    <div class="mt-8">
+                        <h4 class="font-semibold mb-4">关注我</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300">
+                                <i class="fab fa-weixin"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 地图 -->
+                    <div class="mt-8">
+                        <div class="w-full h-64 bg-gray-200 dark:bg-gray-700 rounded-xl overflow-hidden">
+                            <img src="https://via.placeholder.com/800x400/6366F1/FFFFFF?text=广州地图" alt="地图" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 联系表单 -->
+                <div class="animate-slide-up" style="animation-delay: 0.2s;">
+                    <h3 class="text-2xl font-bold mb-6">发送消息</h3>
+                    <form class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">姓名</label>
+                                <input type="text" id="name" class="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300" placeholder="请输入您的姓名">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">邮箱</label>
+                                <input type="email" id="email" class="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300" placeholder="请输入您的邮箱">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">主题</label>
+                            <input type="text" id="subject" class="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300" placeholder="请输入消息主题">
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">消息</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300" placeholder="请输入您的消息"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full px-8 py-3 bg-gradient-primary text-white rounded-lg hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 transform hover:scale-105">
+                            发送消息
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="flex items-center space-x-2 mb-6 md:mb-0">
+                    <div class="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center">
+                        <i class="fas fa-robot text-white text-lg"></i>
+                    </div>
+                    <span class="text-xl font-bold">AI Product Manager</span>
+                </div>
+                
+                <div class="flex items-center space-x-6 mb-6 md:mb-0">
+                    <a href="#home" class="hover:text-primary transition-colors duration-300">首页</a>
+                    <a href="#about" class="hover:text-primary transition-colors duration-300">关于我</a>
+                    <a href="#skills" class="hover:text-primary transition-colors duration-300">技能</a>
+                    <a href="#experience" class="hover:text-primary transition-colors duration-300">工作经历</a>
+                    <a href="#projects" class="hover:text-primary transition-colors duration-300">AI项目</a>
+                    <a href="#contact" class="hover:text-primary transition-colors duration-300">联系我</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-all duration-300">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-all duration-300">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-all duration-300">
+                        <i class="fab fa-weixin"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-all duration-300">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 黄昕彤. AI产品经理 - 空间智能方向. 保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 回到顶部按钮 -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 w-12 h-12 bg-primary text-white rounded-full shadow-lg hover:bg-primary/90 transition-all duration-300 transform hover:scale-110 opacity-0 pointer-events-none">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // 主题切换
+        const themeToggle = document.getElementById('theme-toggle');
+        const html = document.documentElement;
+        
+        // 检查本地存储的主题偏好
+        if (localStorage.getItem('theme') === 'dark' || 
+            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+        });
+        
+        // 移动端菜单
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 关闭移动端菜单
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+        
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        let lastScrollTop = 0;
+        
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > 100) {
+                navbar.classList.add('bg-white', 'dark:bg-gray-900', 'shadow-lg');
+                navbar.classList.remove('bg-transparent');
+            } else {
+                navbar.classList.remove('bg-white', 'dark:bg-gray-900', 'shadow-lg');
+                navbar.classList.add('bg-transparent');
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+        
+        // 回到顶部按钮
+        const backToTopBtn = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+                backToTopBtn.classList.add('opacity-100');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+                backToTopBtn.classList.remove('opacity-100');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // 项目筛选
+        const filterButtons = document.querySelectorAll('.project-filter');
+        const projectItems = document.querySelectorAll('.project-item');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // 移除所有按钮的active类
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('active', 'bg-primary', 'text-white');
+                    btn.classList.add('bg-gray-200', 'dark:bg-gray-700');
+                });
+                
+                // 添加当前按钮的active类
+                button.classList.add('active', 'bg-primary', 'text-white');
+                button.classList.remove('bg-gray-200', 'dark:bg-gray-700');
+                
+                const filter = button.getAttribute('data-filter');
+                
+                // 筛选项目
+                projectItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category').includes(filter)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // 技能雷达图
+        window.addEventListener('load', () => {
+            const skillRadar = echarts.init(document.getElementById('skillRadar'));
+            
+            const option = {
+                tooltip: {
+                    trigger: 'item'
+                },
+                radar: {
+                    indicator: [
+                        { name: 'AI产品设计', max: 100 },
+                        { name: '机器学习', max: 100 },
+                        { name: '数据分析', max: 100 },
+                        { name: '空间智能', max: 100 },
+                        { name: '用户研究', max: 100 },
+                        { name: '项目管理', max: 100 }
+                    ],
+                    radius: '70%',
+                    axisName: {
+                        color: '#333',
+                        dark: {
+                            color: '#ccc'
+                        }
+                    }
+                },
+                series: [{
+                    name: 'AI技能评估',
+                    type: 'radar',
+                    data: [
+                        {
+                            value: [90, 85, 90, 85, 85, 90],
+                            name: '我的AI技能',
+                            areaStyle: {
+                                color: 'rgba(99, 102, 241, 0.3)'
+                            },
+                            lineStyle: {
+                                color: '#6366F1'
+                            },
+                            itemStyle: {
+                                color: '#6366F1'
+                            }
+                        }
+                    ]
+                }]
+            };
+            
+            // 响应式调整
+            window.addEventListener('resize', () => {
+                skillRadar.resize();
+            });
+            
+            // 主题切换时更新图表
+            themeToggle.addEventListener('click', () => {
+                setTimeout(() => {
+                    skillRadar.resize();
+                }, 300);
+            });
+            
+            skillRadar.setOption(option);
+        });
+        
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // 观察所有需要动画的元素
+        document.querySelectorAll('.animate-slide-up, .animate-fade-in, .animate-bounce-in').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+        
+        // 表单提交
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // 这里可以添加表单提交逻辑
+            alert('消息已发送！我会尽快回复您关于AI产品合作的事宜。');
+            
+            // 重置表单
+            document.querySelector('form').reset();
+        });
+    </script>
+</body>
+</html>
